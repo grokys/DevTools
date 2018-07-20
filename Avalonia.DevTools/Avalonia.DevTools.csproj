@@ -12,12 +12,17 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Views\ConsoleView.xaml" />
     <None Remove="Views\TreePageView.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.6.2-build5756-beta" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="2.8.2" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Views\ConsoleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\TreePageView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

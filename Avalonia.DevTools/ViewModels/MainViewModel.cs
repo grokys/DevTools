@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using Avalonia.Controls;
+using Avalonia.DevTools.Models;
 using Avalonia.Input;
 
 namespace Avalonia.DevTools.ViewModels
 {
     internal class MainViewModel : ViewModelBase
     {
-        private ViewModelBase _content;
+        private TreePageViewModel _content;
         private int _selectedTab;
         private TreePageViewModel _logicalTree;
         private TreePageViewModel _visualTree;
@@ -32,9 +33,12 @@ namespace Avalonia.DevTools.ViewModels
             SelectedTab = 0;
             root.GetObservable(TopLevel.PointerOverElementProperty)
                 .Subscribe(x => PointerOverElement = x?.GetType().Name);
+            Console = new ConsoleViewModel(UpdateConsoleContext);
         }
 
-        public ViewModelBase Content
+        public ConsoleViewModel Console { get; }
+
+        public TreePageViewModel Content
         {
             get { return _content; }
             private set { RaiseAndSetIfChanged(ref _content, value); }
@@ -71,6 +75,11 @@ namespace Avalonia.DevTools.ViewModels
         {
             get { return _pointerOverElement; }
             private set { RaiseAndSetIfChanged(ref _pointerOverElement, value); }
+        }
+
+        private void UpdateConsoleContext(ConsoleContext context)
+        {
+            context.e = Content.SelectedNode?.Visual;
         }
 
         public void SelectControl(IControl control)

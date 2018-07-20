@@ -1,7 +1,10 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:vm="clr-namespace:Avalonia.DevTools.ViewModels">
   <Grid ColumnDefinitions="*,4,3*">    
-    <TreeView Name="tree" Items="{Binding Nodes}" SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
+    <TreeView Name="tree"
+              BorderThickness="0"
+              Items="{Binding Nodes}"
+              SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
       <TreeView.DataTemplates>
         <TreeDataTemplate DataType="vm:TreeNode"
                           ItemsSource="{Binding Children}">
@@ -18,7 +21,7 @@
       </TreeView.Styles>
     </TreeView>
 
-    <GridSplitter Width="4" Grid.Column="1"/>
+    <GridSplitter Background="Silver" Width="4" Grid.Column="1"/>
     <ContentControl Content="{Binding Details}" Grid.Column="2"/>
   </Grid>
 </UserControl>
