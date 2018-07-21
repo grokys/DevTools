@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\ConsoleView.xaml" />
+    <None Remove="Views\MainWindow.xaml" />
     <None Remove="Views\TreePageView.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -25,6 +26,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\ConsoleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TreePageView.xaml">

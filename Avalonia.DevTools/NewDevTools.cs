@@ -37,7 +37,7 @@ namespace Avalonia.DevTools
                     var devTools = new MainView();
                     devTools.DataContext = new MainViewModel(control);
 
-                    devToolsWindow = new Window
+                    devToolsWindow = new MainWindow
                     {
                         Width = 1024,
                         Height = 512,
