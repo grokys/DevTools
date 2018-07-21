@@ -1,0 +1,3 @@
+[submodule "submodules/DataGrid"]
+	path = submodules/DataGrid
+	url = https://github.com/AvaloniaUI/DataGrid.git

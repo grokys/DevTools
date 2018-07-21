@@ -5,7 +5,13 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.DevTools", "Avalonia.DevTools\Avalonia.DevTools.csproj", "{73C535E9-BD49-4B96-801C-A5DC8AA9350F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{E762A5B1-01FF-4863-861D-79F0E01F9DE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.csproj", "{E762A5B1-01FF-4863-861D-79F0E01F9DE1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.DataGrid", "submodules\DataGrid\src\Avalonia.DataGrid\Avalonia.DataGrid.csproj", "{79030C81-1396-492B-916E-2FE24BD2EF99}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.DataGrid.Themes.Default", "submodules\DataGrid\src\Avalonia.DataGrid.Themes.Default\Avalonia.DataGrid.Themes.Default.csproj", "{4925EC12-BC4C-408C-8C77-2355FD8E2998}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "submodules", "submodules", "{145EB34F-03C5-4526-A73D-091E88B0145F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,21 @@ Global
 		{E762A5B1-01FF-4863-861D-79F0E01F9DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E762A5B1-01FF-4863-861D-79F0E01F9DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E762A5B1-01FF-4863-861D-79F0E01F9DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79030C81-1396-492B-916E-2FE24BD2EF99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79030C81-1396-492B-916E-2FE24BD2EF99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79030C81-1396-492B-916E-2FE24BD2EF99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79030C81-1396-492B-916E-2FE24BD2EF99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4925EC12-BC4C-408C-8C77-2355FD8E2998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4925EC12-BC4C-408C-8C77-2355FD8E2998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4925EC12-BC4C-408C-8C77-2355FD8E2998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4925EC12-BC4C-408C-8C77-2355FD8E2998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{79030C81-1396-492B-916E-2FE24BD2EF99} = {145EB34F-03C5-4526-A73D-091E88B0145F}
+		{4925EC12-BC4C-408C-8C77-2355FD8E2998} = {145EB34F-03C5-4526-A73D-091E88B0145F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {128C1B6B-DEB8-465B-9D80-2A572C8541D4}

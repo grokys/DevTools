@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Avalonia.Collections;
 using Avalonia.VisualTree;
 
 namespace Avalonia.DevTools.ViewModels
@@ -17,6 +18,7 @@ namespace Avalonia.DevTools.ViewModels
                     .Select(x => new PropertyDetails(avaloniaObject, x))
                     .OrderBy(x => x.IsAttached)
                     .ThenBy(x => x.Name);
+                PropertiesView = new CollectionViewBase(Properties);
             }
         }
 
@@ -31,5 +33,7 @@ namespace Avalonia.DevTools.ViewModels
             get;
             private set;
         }
+
+        public ICollectionView PropertiesView { get; }
     }
 }

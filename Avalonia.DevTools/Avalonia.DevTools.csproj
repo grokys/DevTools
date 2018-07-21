@@ -20,6 +20,10 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="2.8.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\submodules\DataGrid\src\Avalonia.DataGrid.Themes.Default\Avalonia.DataGrid.Themes.Default.csproj" />
+    <ProjectReference Include="..\submodules\DataGrid\src\Avalonia.DataGrid\Avalonia.DataGrid.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Views\ConsoleView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
