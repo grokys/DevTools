@@ -4,9 +4,9 @@
   <DockPanel>
     <dg:DataGrid Items="{Binding PropertiesView}">
       <dg:DataGrid.Columns>
-        <dg:DataGridTextColumn Header="Property" Binding="{Binding Name}"/>
+        <dg:DataGridTextColumn Header="Property" Binding="{Binding Name}" IsReadOnly="True"/>
         <dg:DataGridTextColumn Header="Value" Binding="{Binding Value}"/>
-        <dg:DataGridTextColumn Header="Priority" Binding="{Binding Priority}"/>
+        <dg:DataGridTextColumn Header="Priority" Binding="{Binding Priority}" IsReadOnly="True"/>
       </dg:DataGrid.Columns>
     </dg:DataGrid>
   </DockPanel>

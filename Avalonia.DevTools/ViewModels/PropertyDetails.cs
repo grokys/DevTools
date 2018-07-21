@@ -3,32 +3,40 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Reactive.Linq;
 using Avalonia.Data;
+using Avalonia.Data.Converters;
 using Avalonia.Diagnostics;
+using Avalonia.Markup.Xaml;
 
 namespace Avalonia.DevTools.ViewModels
 {
     internal class PropertyDetails : ViewModelBase
     {
+        private AvaloniaObject _target;
+        private AvaloniaProperty _property;
         private object _value;
         private string _priority;
         private string _diagnostic;
+        private TypeConverter _converter;
         private string _group;
 
         public PropertyDetails(AvaloniaObject o, AvaloniaProperty property)
         {
+            _target = o;
+            _property = property;
+
             Name = property.IsAttached ?
                 $"[{property.OwnerType.Name}.{property.Name}]" :
                 property.Name;
-            IsAttached = property.IsAttached;
             UpdateGroup();
 
             // TODO: Unsubscribe when view model is deactivated.
             o.GetObservable(property).Subscribe(x =>
             {
                 var diagnostic = o.GetDiagnostic(property);
-                Value = diagnostic.Value ?? "(null)";
+                RaiseAndSetIfChanged(ref _value, diagnostic.Value);
                 Priority = (diagnostic.Priority != BindingPriority.Unset) ?
                     diagnostic.Priority.ToString() :
                     diagnostic.Property.Inherits ? "Inherited" : "Unset";
@@ -38,7 +46,7 @@ namespace Avalonia.DevTools.ViewModels
 
         public string Name { get; }
 
-        public bool IsAttached { get; }
+        public bool IsAttached => _property.IsAttached;
 
         public string Priority
         {
@@ -52,10 +60,30 @@ namespace Avalonia.DevTools.ViewModels
             private set { RaiseAndSetIfChanged(ref _diagnostic, value); }
         }
 
-        public object Value
+        public string Value
         {
-            get { return _value; }
-            private set { RaiseAndSetIfChanged(ref _value, value); }
+            get
+            {
+                if (_value == null)
+                {
+                    return "(null)";
+                }
+
+                return Converter?.CanConvertTo(typeof(string)) == true ?
+                    Converter.ConvertToString(_value) :
+                    _value.ToString();
+            }
+            set
+            {
+                try
+                {
+                    var convertedValue = Converter?.CanConvertFrom(typeof(string)) == true ?
+                        Converter.ConvertFromString(value) :
+                        DefaultValueConverter.Instance.ConvertBack(value, _property.PropertyType, null, CultureInfo.CurrentCulture);
+                    _target.SetValue(_property, convertedValue);
+                }
+                catch { }
+            }
         }
 
         public string Group
@@ -63,6 +91,25 @@ namespace Avalonia.DevTools.ViewModels
             get { return _group; }
             private set { RaiseAndSetIfChanged(ref _group, value); }
         }
+
+        private TypeConverter Converter
+        {
+            get
+            {
+                if (_converter == null)
+                {
+                    var converterType = AvaloniaTypeConverters.GetTypeConverter(_value.GetType());
+
+                    if (converterType != null)
+                    {
+                        _converter = (TypeConverter)Activator.CreateInstance(converterType);
+                    }
+                }
+
+                return _converter;
+            }
+        }
+        
 
         protected override void OnPropertyChanged(PropertyChangedEventArgs e)
         {
