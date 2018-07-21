@@ -12,8 +12,9 @@ namespace Avalonia.DevTools.ViewModels
     {
         readonly ConsoleContext _context = new ConsoleContext();
         readonly Action<ConsoleContext> _updateContext;
-        ScriptState<object> _state;
-        string _input;
+        private ScriptState<object> _state;
+        private string _input;
+        private bool _isVisible;
 
         public ConsoleViewModel(Action<ConsoleContext> updateContext)
         {
@@ -24,6 +25,12 @@ namespace Avalonia.DevTools.ViewModels
         {
             get => _input;
             set => RaiseAndSetIfChanged(ref _input, value);
+        }
+
+        public bool IsVisible
+        {
+            get => _isVisible;
+            set => RaiseAndSetIfChanged(ref _isVisible, value);
         }
 
         public AvaloniaList<string> Output { get; } = new AvaloniaList<string>();
