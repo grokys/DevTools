@@ -102,5 +102,7 @@ namespace Avalonia.DevTools.ViewModels
                 }
             }
         }
+
+        public void ToggleVisibility() => IsVisible = !IsVisible;
     }
 }

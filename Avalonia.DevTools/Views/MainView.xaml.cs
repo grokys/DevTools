@@ -11,6 +11,7 @@ namespace Avalonia.DevTools.Views
 {
     public class MainView : UserControl
     {
+        private const int ConsoleRow = 5;
         private readonly ConsoleView _console;
         private readonly Grid _rootGrid;
         private double _consoleHeight = 1;
@@ -23,6 +24,24 @@ namespace Avalonia.DevTools.Views
             _rootGrid = this.FindControl<Grid>("rootGrid");
         }
 
+        public void ToggleConsole()
+        {
+            var vm = (MainViewModel)DataContext;
+
+            vm.Console.ToggleVisibility();
+
+            if (vm.Console.IsVisible)
+            {
+                _rootGrid.RowDefinitions[ConsoleRow].Height = new GridLength(_consoleHeight, GridUnitType.Star);
+                Dispatcher.UIThread.Post(() => _console.FocusInput(), DispatcherPriority.Background);
+            }
+            else
+            {
+                _consoleHeight = _rootGrid.RowDefinitions[ConsoleRow].Height.Value;
+                _rootGrid.RowDefinitions[ConsoleRow].Height = GridLength.Auto;
+            }
+        }
+
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
@@ -32,20 +51,7 @@ namespace Avalonia.DevTools.Views
         {
             if (e.Key == Key.Escape)
             {
-                var vm = (MainViewModel)DataContext;
-                vm.Console.IsVisible = !vm.Console.IsVisible;
-
-                if (vm.Console.IsVisible)
-                {
-                    _rootGrid.RowDefinitions[4].Height = new GridLength(_consoleHeight, GridUnitType.Star);
-                    Dispatcher.UIThread.Post(() => _console.FocusInput(), DispatcherPriority.Background);
-                }
-                else
-                {
-                    _consoleHeight = _rootGrid.RowDefinitions[4].Height.Value;
-                    _rootGrid.RowDefinitions[4].Height = GridLength.Auto;
-                }
-
+                ToggleConsole();
                 e.Handled = true;
             }
         }
