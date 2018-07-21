@@ -3,9 +3,11 @@
              xmlns:dg="clr-namespace:Avalonia.Controls;assembly=Avalonia.DataGrid">
   <DockPanel>
     <TextBox DockPanel.Dock="Top"
+             BorderThickness="1"
              Text="{Binding PropertyFilter}"
              Watermark="Filter properties"/>
     <dg:DataGrid Items="{Binding PropertiesView}"
+                 BorderThickness="0"
                  RowBackground="Transparent"
                  HeadersVisibility="None">
       <dg:DataGrid.Columns>

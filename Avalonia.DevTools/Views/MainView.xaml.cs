@@ -5,11 +5,13 @@ using Avalonia.DevTools.ViewModels;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Threading;
 
 namespace Avalonia.DevTools.Views
 {
     public class MainView : UserControl
     {
+        private readonly ConsoleView _console;
         private readonly Grid _rootGrid;
         private double _consoleHeight = 1;
 
@@ -17,6 +19,7 @@ namespace Avalonia.DevTools.Views
         {
             this.InitializeComponent();
             this.AddHandler(KeyDownEvent, PreviewKeyDown, RoutingStrategies.Tunnel);
+            _console = this.FindControl<ConsoleView>("console");
             _rootGrid = this.FindControl<Grid>("rootGrid");
         }
 
@@ -35,6 +38,7 @@ namespace Avalonia.DevTools.Views
                 if (vm.Console.IsVisible)
                 {
                     _rootGrid.RowDefinitions[4].Height = new GridLength(_consoleHeight, GridUnitType.Star);
+                    Dispatcher.UIThread.Post(() => _console.FocusInput(), DispatcherPriority.Background);
                 }
                 else
                 {

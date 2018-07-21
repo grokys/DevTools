@@ -8,13 +8,14 @@
       <TabStripItem Content="Visual Tree"/>
     </TabStrip>
 
-    <Rectangle Grid.Row="1" Height="4" Fill="Silver"/>
+    <Rectangle Grid.Row="1" Height="1" Fill="Silver"/>
     
     <ContentControl Grid.Row="2" Content="{Binding Content}"/>
 
-    <GridSplitter Grid.Row="3" Background="Silver" Height="4"/>
+    <GridSplitter Grid.Row="3" Background="Silver" Height="1"/>
     
-    <views:ConsoleView Grid.Row="4"
+    <views:ConsoleView Name="console"
+                       Grid.Row="4"
                        DataContext="{Binding Console}"
                        IsVisible="{Binding IsVisible}"/>
     

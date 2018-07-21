@@ -10,6 +10,7 @@
     <EmbeddedResource Include="**\*.xaml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Assets\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\ConsoleView.xaml" />
@@ -34,5 +35,8 @@
     <EmbeddedResource Update="Views\TreePageView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
   </ItemGroup>
 </Project>
