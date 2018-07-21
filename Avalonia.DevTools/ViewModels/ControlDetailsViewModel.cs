@@ -1,6 +1,7 @@
 // Copyright (c) The Avalonia Project. All rights reserved.
 // Licensed under the MIT license. See licence.md file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Collections;
@@ -11,6 +12,7 @@ namespace Avalonia.DevTools.ViewModels
     internal class ControlDetailsViewModel : ViewModelBase
     {
         private static readonly PriorityComparer s_priorityComparer;
+        private string _propertyFilter;
 
         public ControlDetailsViewModel(IVisual control)
         {
@@ -25,6 +27,7 @@ namespace Avalonia.DevTools.ViewModels
 
                 var view = new CollectionViewBase(Properties);
                 view.GroupDescriptions.Add(new PathGroupDescription(nameof(PropertyDetails.Group)));
+                view.Filter = FilterProperty;
                 PropertiesView = view;
             }
         }
@@ -42,6 +45,28 @@ namespace Avalonia.DevTools.ViewModels
         }
 
         public ICollectionView PropertiesView { get; }
+
+        public string PropertyFilter
+        {
+            get => _propertyFilter;
+            set
+            {
+                if (RaiseAndSetIfChanged(ref _propertyFilter, value))
+                {
+                    PropertiesView.Refresh();
+                }
+            }
+        }
+
+        private bool FilterProperty(object arg)
+        {
+            if (!string.IsNullOrWhiteSpace(PropertyFilter) && arg is PropertyDetails property)
+            {
+                return property.Name.IndexOf(PropertyFilter, StringComparison.OrdinalIgnoreCase) != -1;
+            }
+
+            return true;
+        }
 
         private class PriorityComparer : IComparer<string>
         {

@@ -2,7 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dg="clr-namespace:Avalonia.Controls;assembly=Avalonia.DataGrid">
   <DockPanel>
-    <dg:DataGrid Items="{Binding PropertiesView}">
+    <TextBox DockPanel.Dock="Top"
+             Text="{Binding PropertyFilter}"
+             Watermark="Filter properties"/>
+    <dg:DataGrid Items="{Binding PropertiesView}"
+                 RowBackground="Transparent"
+                 HeadersVisibility="None">
       <dg:DataGrid.Columns>
         <dg:DataGridTextColumn Header="Property" Binding="{Binding Name}" IsReadOnly="True"/>
         <dg:DataGridTextColumn Header="Value" Binding="{Binding Value}"/>
