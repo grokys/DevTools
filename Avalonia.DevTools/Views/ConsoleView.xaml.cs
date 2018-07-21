@@ -26,9 +26,24 @@ namespace Avalonia.DevTools.Views
 
         private void InputKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            var vm = (ConsoleViewModel)DataContext;
+
+            switch (e.Key)
             {
-                ((ConsoleViewModel)DataContext).Execute();
+                case Key.Enter:
+                    vm.Execute();
+                    e.Handled = true;
+                    break;
+                case Key.Up:
+                    vm.HistoryUp();
+                    _input.CaretIndex = _input.Text.Length;
+                    e.Handled = true;
+                    break;
+                case Key.Down:
+                    vm.HistoryDown();
+                    _input.CaretIndex = _input.Text.Length;
+                    e.Handled = true;
+                    break;
             }
         }
     }

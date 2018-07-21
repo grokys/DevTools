@@ -32,7 +32,22 @@
              DockPanel.Dock="Bottom"
              BorderThickness="1"
              Text="{Binding Input}"/>
+    
     <ListBox BorderThickness="0"
-             Items="{Binding Output}"/>
+             FontFamily="resm:ControlCatalog.Assets.Fonts?assembly=Avalonia.DevTools#Source Sans Pro"
+             Items="{Binding History}"
+             VirtualizationMode="None">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel Orientation="Vertical">
+            <DockPanel>
+              <TextBlock DockPanel.Dock="Left" Margin="0,0,4,0">></TextBlock>
+              <TextBlock Text="{Binding Input}"/>
+            </DockPanel>
+            <TextBlock Foreground="{Binding Foreground}" Text="{Binding Output}"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
   </DockPanel>
 </UserControl>

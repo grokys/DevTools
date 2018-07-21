@@ -12,9 +12,10 @@ namespace Avalonia.DevTools.ViewModels
     {
         readonly ConsoleContext _context = new ConsoleContext();
         readonly Action<ConsoleContext> _updateContext;
-        private ScriptState<object> _state;
+        private int _historyIndex = -1;
         private string _input;
         private bool _isVisible;
+        private ScriptState<object> _state;
 
         public ConsoleViewModel(Action<ConsoleContext> updateContext)
         {
@@ -33,10 +34,15 @@ namespace Avalonia.DevTools.ViewModels
             set => RaiseAndSetIfChanged(ref _isVisible, value);
         }
 
-        public AvaloniaList<string> Output { get; } = new AvaloniaList<string>();
+        public AvaloniaList<ConsoleHistoryItem> History { get; } = new AvaloniaList<ConsoleHistoryItem>();
 
         public async Task Execute()
         {
+            if (string.IsNullOrWhiteSpace(Input))
+            {
+                return;
+            }
+
             try
             {
                 var options = ScriptOptions.Default
@@ -53,14 +59,48 @@ namespace Avalonia.DevTools.ViewModels
                     _state = await _state.ContinueWithAsync(Input);
                 }
 
-                Output.Add(_state.ReturnValue?.ToString() ?? "No output");
+                History.Add(new ConsoleHistoryItem(Input, _state.ReturnValue));
             }
             catch (Exception ex)
             {
-                Output.Add(ex.Message);
+                History.Add(new ConsoleHistoryItem(Input, ex));
             }
 
             Input = string.Empty;
+            _historyIndex = -1;
+        }
+
+        public void HistoryUp()
+        {
+            if (History.Count > 0)
+            {
+                if (_historyIndex == -1)
+                {
+                    _historyIndex = History.Count - 1;
+                }
+                else if (_historyIndex > 0)
+                {
+                    --_historyIndex;
+                }
+
+                Input = History[_historyIndex].Input;
+            }
+        }
+
+        public void HistoryDown()
+        {
+            if (History.Count > 0 && _historyIndex >= 0)
+            {
+                if (_historyIndex == History.Count - 1)
+                {
+                    _historyIndex = -1;
+                    Input = string.Empty;
+                }
+                else
+                {
+                    Input = History[++_historyIndex].Input;
+                }
+            }
         }
     }
 }
