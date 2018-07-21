@@ -41,7 +41,15 @@ namespace Avalonia.DevTools.ViewModels
         public TreePageViewModel Content
         {
             get { return _content; }
-            private set { RaiseAndSetIfChanged(ref _content, value); }
+            private set
+            {
+                if (_content?.SelectedNode?.Visual is IControl control)
+                {
+                    value.SelectControl(control);
+                }
+
+                RaiseAndSetIfChanged(ref _content, value);
+            }
         }
 
         public int SelectedTab
